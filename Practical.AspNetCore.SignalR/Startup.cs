@@ -24,6 +24,21 @@ namespace Practical.AspNetCore.SignalR
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // services.AddControllersWithViews();
+
+            // Bearer acuthentication
+            // services.AddAuthentication().AddJwtBearer(options => {
+            //     options.Events = new Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerEvents {
+            //         OnMessageReceived = context => {
+            //             var accessToken = ContextBoundObject.Request.Query["access_token"];
+            //             if (string.IsNullOrWhiteSpace(accessToken)==false) {
+            //                 context.Token = accessToken;
+            //             }
+            //             return Task.CompletedTask;
+            //         }
+            //     };
+            // });
+
             services.AddRazorPages();
             services.AddSignalR();
         }
@@ -52,7 +67,12 @@ namespace Practical.AspNetCore.SignalR
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<MessageHub>("/messages");
+
                 endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

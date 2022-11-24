@@ -1,6 +1,10 @@
 ﻿"use strict"
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/messages").build();
+var connection = new signalR.HubConnectionBuilder()
+                        .withUrl("/messages", {
+                            accessTokenFactory: () => "testing"
+                        })
+                        .build();
 
 document.getElementById("sendButton").disabled = true;
 
